@@ -1,0 +1,94 @@
+@import ('nib')
+@import url('http://yui.yahooapis.com/pure/0.2.0/pure-min.css')
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,300,600')
+
+_accent = #e23c3c
+
+html,
+body
+  font-family 'Open Sans', sans-serif
+  font-size 14px
+  font-weight 400
+  height 100%
+  width 100%
+  overflow hidden
+
+h1, h2, h3
+  font-weight 300
+
+h4, h5, h6
+  font-weight 600
+
+b, strong
+  font-weight 600
+
+i, em
+  font-style normal
+  font-weight 400
+
+.accent
+  color _accent
+
+.spacer
+  height 15px
+  display block
+
+sidebarWidth = 270px
+
+#sidebar
+  background url('../img/pattern.png') repeat left top
+  width sidebarWidth
+  height 100%
+  position fixed
+  top 0
+  left 0
+  z-index 100
+  color #FFFFFF
+  font-size 16px
+  font-weight 300
+  box-shadow inset -20px 0 10px -10px rgba(#000, 0.1)
+
+  .sidebar-container
+    padding 30px
+    img.logo
+      width 190px
+      height auto
+      vertical-align text-top
+
+  .pure-menu
+    background none
+    border none
+    ul
+      li
+        a
+          background none
+          color #FFFFFF
+          transition all 0.3s ease-in-out
+          box-shadow inset 0px 0 0 _accent
+          padding 7px 30px
+          &:hover,
+          &.active
+            box-shadow inset sidebarWidth 0 0 _accent
+
+
+#page
+  position relative
+  z-index 1
+  margin-left sidebarWidth
+  background #FFFFFF
+  height 100%
+  overflow hidden
+  overflow-x scroll
+  .page-container
+    padding 10px 30px
+    width auto
+    white-space nowrap
+    .page
+      display inline-block
+      white-space nowrap
+      max-width 500px
+      padding 0 70px 0 30px
+      vertical-align top
+      &> *
+        white-space normal
+        

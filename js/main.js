@@ -37,9 +37,21 @@
         theme: 'dark-thin',
         advanced: {
           updateOnBrowserResize: true
+        },
+        callbacks: {
+
         }
       }
     );
+
+    setTimeout(function () {
+      var pandagif = '<img style="display:none; position: absolute; width: 50px; top: -38px; left: 50%; margin-left: -25px;" src="http://30.media.tumblr.com/tumblr_livy7oxLC41qc9z7yo1_500.gif" id="pandagif">';
+
+      $('.page-container .mCSB_scrollTools').css('overflow', 'visible').find('.mCSB_draggerContainer .mCSB_dragger .mCSB_dragger_bar').append($(pandagif));
+
+      $('.page-container img#pandagif').fadeIn(500);
+
+    }, 100);
 
     $('.pure-menu > ul').mCustomScrollbar({
         scrollInertia: 550,

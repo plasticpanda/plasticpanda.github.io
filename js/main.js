@@ -5,19 +5,45 @@
 
   $(function () {
 
+    // some vars
+    var snapTo = []
+      , getSnaps
+      , setHeights
+      , findClosest
+      , snapScrollbar;
 
-    var snapTo = [];
 
-    console.log($('.page-container').outerWidth() / $('.page-container > .page').length);
+    // populate snapTo array with right positions
+    getSnaps = function () {
+      $('.page-container > .page').each(function (i, page) {
+        snapTo[i] = $(page).position().left;
+      });
+    };
+    getSnaps();
 
-    $('.page-container > .page').each(function(){
-      var $this = $(this)
-        , thisX = $this.position().left;
-      
-      snapTo.push(thisX);
+    // set heights for some pagecontainer/sidebar elements
+    setHeights = function () {
+      $('.page-container').css({
+        'height': ($('#page').height() - (parseInt($('.page-container').css('padding-top').replace('px', ''), 10) * 2)) + 'px'
+      });
+
+      $('.pure-menu > ul').css({
+        'height': ($('#sidebar').height() - $('.sidebar-container').outerHeight() - 15) + 'px'
+      });
+    };
+    setHeights();
+
+    // debouncing on resize for preventing over nine thousand times calls
+    $.event.special.debouncedresize.threshold = 1000;
+    $(window).on('debouncedresize', function () {
+      getSnaps();
+      setHeights();
+      $('.page-container').mCustomScrollbar('update');
+      $('.pure-menu > ul').mCustomScrollbar('update');
     });
 
-    function findClosest(num,arr){
+    // find which page is closest when scrolling
+    findClosest = function (num, arr) {
       var curr = arr[0]
         , diff = Math.abs(num - curr);
 
@@ -31,26 +57,26 @@
       }
 
       return curr;
-    }
+    };
 
-    function snapScrollbar(){
+    // callback for pages custom scrollbar
+    snapScrollbar = function () {
       var posX = $('.page-container .mCSB_container').position().left
         , closestX = findClosest(Math.abs(posX), snapTo);
       
       $('.page-container').mCustomScrollbar('scrollTo', closestX, { scrollInertia: 350, callbacks: false });
-    }
+    };
 
-
-
+    // plugin for (main content) pages scrolling
     $('.page-container').mCustomScrollbar({
         scrollInertia: 550,
         horizontalScroll: true,
-        mouseWheelPixels: 'auto', //$('.page-container').outerWidth() / $('.page-container > .page').length,
-        autoHideScrollbar: true,
+        mouseWheelPixels: 'auto',
+        autoHideScrollbar: false,
         scrollButtons: {
-          enable:false
+          enable: false
         },
-        theme: 'dark',
+        theme: 'dark-thin',
         callbacks: {
           onScroll:function(){ 
             snapScrollbar(); 
@@ -62,9 +88,19 @@
       }
     );
 
-
-
-
+    $('.pure-menu > ul').mCustomScrollbar({
+        scrollInertia: 550,
+        mouseWheelPixels: 'auto',
+        autoHideScrollbar: false,
+        scrollButtons: {
+          enable: false
+        },
+        theme: 'light-thin',
+        advanced: {
+          updateOnBrowserResize: true
+        }
+      }
+    );
 
   });
 

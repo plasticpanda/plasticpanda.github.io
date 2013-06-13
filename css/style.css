@@ -85,7 +85,6 @@ em {
   background: #fff;
   height: 100%;
   overflow: hidden;
-  overflow-x: scroll;
 }
 #page .page-container {
   padding: 10px 30px;
